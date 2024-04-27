@@ -20,6 +20,7 @@ jobs:
       - name: Generate pdf docs
         run: |
           cd ~/.choosenim/toolchains/nim-*
+          sudo chmod +x ./koch
           ./koch pdf
           zip -r doc.zip doc
 
