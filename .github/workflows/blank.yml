@@ -1,0 +1,30 @@
+name: CI
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Nim
+        uses: iffy/install-nim@v4.5.0
+
+      - name: Install xelatex
+        run: |
+          sudo apt install texlive-xetex
+          
+      - name: Generate pdf docs
+        run: |
+          cd ~/.choosenim/toolchains/nim-*
+          ./koch pdf
+          zip -r doc.zip doc
+
+      - uses: d1ceward/draft-assets-release-action@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          files: |
+            doc.zip
