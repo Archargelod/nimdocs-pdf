@@ -22,11 +22,12 @@ jobs:
           
       - name: Generate pdf docs
         run: |
+          cd Nim
           ./bin/koch pdf
-          zip -r doc.zip doc
+          zip -r ~/doc.zip doc
 
       - uses: d1ceward/draft-assets-release-action@v2
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           files: |
-            doc.zip
+            ~/doc.zip
